@@ -1,0 +1,14 @@
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <block type="core/text" name="zoetropescripts">
+                <action method="setText"><text><![CDATA[<link href="//d34tuy4jppw3dn.cloudfront.net/v1/css/style.css" rel="stylesheet" type="text/css" id="zoetropescripts"><script src="//d34tuy4jppw3dn.cloudfront.net/v1/js/zoe-widget.min.js"></script>]]></text></action>
+            </block>
+        </reference>
+    </default>
+    <catalog_product_view>
+        <reference name="product.info.media">
+            <action method="setTemplate" ifconfig="zoetrope/general/active"><template>catalog/product/view/zoetrope.phtml</template></action>
+        </reference>
+    </catalog_product_view>
+</layout>

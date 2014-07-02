@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+     <config>
+       <modules>
+         <MadCapsule_Zoetrope>
+            <active>true</active>
+            <codePool>local</codePool>
+        </MadCapsule_Zoetrope>
+      </modules>
+   </config>

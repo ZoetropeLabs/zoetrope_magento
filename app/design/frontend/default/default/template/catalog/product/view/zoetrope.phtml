@@ -1,0 +1,76 @@
+<?php
+/**
+ * zoetrope.phtml
+ * Created by James Mikkelson on 2014-06-25.
+ *
+ * Licensed under The GPLv2 License
+ * Redistributions of files must retain the above copyright notice
+ *
+ * @link          www.madcapsule.com
+ * @author        james@madcapsule.co.uk
+ * @license       GPLv2 License (http://www.gnu.org/licenses/gpl-2.0.html)
+ */
+	$_product = $this->getProduct();
+	$_helper = $this->helper('catalog/output');
+	$_zoetrope     = Mage::helper('zoetrope');
+	$zoetrope_id   = $this->getProduct()->getData('zoetrope_id');
+	$start_index   = $this->getProduct()->getData('zoetrope_starting_pos');
+?>
+
+<?php if($_product->getImage() != 'no_selection' && $_product->getImage() && !$zoetrope_id){ ?>
+<p class="product-image product-image-zoom">
+    <?php
+        $_img = '<img id="image" src="'.$this->helper('catalog/image')->init($_product, 'image').'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" />';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+</p>
+<p class="zoom-notice" id="track_hint"><?php echo $this->__('Double click on above image to view full picture') ?></p>
+<div class="zoom">
+    <img id="zoom_out" src="<?php echo $this->getSkinUrl('images/slider_btn_zoom_out.gif') ?>" alt="<?php echo $this->__('Zoom Out') ?>" title="<?php echo $this->__('Zoom Out') ?>" class="btn-zoom-out" />
+    <div id="track">
+        <div id="handle"></div>
+    </div>
+    <img id="zoom_in" src="<?php echo $this->getSkinUrl('images/slider_btn_zoom_in.gif') ?>" alt="<?php echo $this->__('Zoom In') ?>" title="<?php echo $this->__('Zoom In') ?>" class="btn-zoom-in" />
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    Event.observe(window, 'load', function() {
+        product_zoom = new Product.Zoom('image', 'track', 'handle', 'zoom_in', 'zoom_out', 'track_hint');
+    });
+//]]>
+</script>
+
+<?php }elseif($_product->getImage() != 'no_selection' && $_product->getImage() && $zoetrope_id){ ?>
+<p>
+    <?php
+        $_img = '<img id="image" src="'.$_zoetrope->getCdn().$zoetrope_id.'/'.$_zoetrope->getResolution().'/'.$start_index.'.jpg" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" class="zoe-engage-image" 
+data-zoe-site="'.$_zoetrope->getSiteId().'"
+data-zoe-image="'.$zoetrope_id.'"
+'.$_zoetrope->getStyle().'
+data-zoe-preload="true"
+data-zoe-start-ind="'.$start_index.'"
+width="'.$_zoetrope->getWidth().'"
+height="'.$_zoetrope->getHeight().'"/>';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+</p>
+<?php }else{ ?>
+<p class="product-image">
+    <?php
+        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(265).'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" />';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+</p>
+<?php } ?>
+<?php if(count($this->getGalleryImages()) > 0){ ?>
+<div class="more-views">
+    <h2><?php echo $this->__('More Views') ?></h2>
+    <ul>
+    <?php foreach($this->getGalleryImages() as $_image){ ?>
+        <li>
+            <a href="#" onclick="popWin('<?php echo $this->getGalleryUrl($_image) ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;" title="<?php echo $this->escapeHtml($_image->getLabel()) ?>"><img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(56); ?>" width="56" height="56" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" /></a>
+        </li>
+    <?php } ?>
+    </ul>
+</div>
+<?php } ?>
