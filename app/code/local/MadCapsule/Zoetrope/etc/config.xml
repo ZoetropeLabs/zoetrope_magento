@@ -36,6 +36,17 @@
                 <class>MadCapsule_Zoetrope_Helper</class>
             </zoetrope>  
         </helpers>
+	<events>
+		<admin_system_config_changed_section_zoetrope>
+		    <observers>
+			<zoetrope>
+			    <type>singleton</type>
+			    <class>zoetrope/observer</class>
+			    <method>trigger_import</method>
+			</zoetrope>
+		    </observers>
+		</admin_system_config_changed_section_zoetrope>
+	</events>
     </global>
     <frontend>
         <routers>
