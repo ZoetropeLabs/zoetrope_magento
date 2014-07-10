@@ -12,6 +12,20 @@
  */
 class MadCapsule_Zoetrope_Model_Observer
 {	
+
+	public function trigger_import(){
+
+		if(Mage::getStoreConfig('zoetrope/general/triggerimport')){
+
+			if($this->import()){
+				Mage::getSingleton('core/session')->addSuccess('Zoetrope Import Ran'); 
+			}else{
+				Mage::getSingleton('core/session')->addWarning('Zoetrope import did not complete. Check your feed URL.'); 
+			}
+		}
+
+	}
+
 	public function import()
 	{
 
@@ -47,6 +61,7 @@ class MadCapsule_Zoetrope_Model_Observer
 		}
 
 		Mage::log('Zoetrope Import Complete');
+		return true;
 
 	}
 
